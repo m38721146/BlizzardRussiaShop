@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blizzard Russia | Магазин Donat & IV</title>
+<style>
+body { margin:0; padding:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#0a0f1f,#1b1f3a); color:#fff; text-align:center; }
+.top-banner { background:#1e90ff; color:#fff; padding:15px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+.top-banner a { background:#fff; color:#1e90ff; padding:8px 20px; border-radius:8px; text-decoration:none; font-weight:bold; transition:.3s; }
+.top-banner a:hover { background:#e0e0e0; }
+
+.main-content { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+h1 { font-size:2.5em; margin-bottom:20px; color:#1e90ff; text-shadow:0 0 10px #1e90ff; }
+p { font-size:1.2em; margin-bottom:30px; line-height:1.5; }
+ul { list-style:none; padding:0; font-size:1.1em; }
+ul li { margin:10px 0; display:flex; align-items:center; justify-content:center; }
+.emoji { margin-right:10px; font-size:1.3em; }
+
+.buy-btn { background:#1e90ff; color:#fff; font-size:1.3em; padding:15px 40px; border:none; border-radius:10px; cursor:pointer; text-decoration:none; transition:.3s; margin-top:20px; box-shadow:0 0 15px #1e90ff; }
+.buy-btn:hover { background:#63b3ff; box-shadow:0 0 25px #63b3ff; }
+
+.package-btn { display:block; width:100%; padding:12px; margin:10px 0; background:#1e90ff; color:#fff; border:none; border-radius:8px; font-size:1.1em; cursor:pointer; text-align:left; transition:.3s; }
+.package-btn:hover { background:#63b3ff; }
+
+.modal { display:none; position:fixed; z-index:200; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.8); }
+.modal-content { background-color:#111; margin:10% auto; padding:20px; border-radius:12px; width:90%; max-width:400px; text-align:left; box-shadow:0 0 25px #1e90ff; }
+.close { color:#fff; float:right; font-size:28px; font-weight:bold; cursor:pointer; }
+.bottom-text { margin-top:15px; font-size:0.95em; color:#bfcfe8; text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+    <span>💡 Если вы оплатили, нажмите кнопку:</span>
+    <a href="https://t.me/Ajan_Dev" target="_blank">Я оплатил</a>
+</div>
+
+<div class="main-content">
+    <h1>Добро пожаловать в магазин Blizzard Russia</h1>
+    <p>Здесь вы можете приобрести <strong>Donat</strong> и <strong>IV</strong> за <strong>звёзды</strong> ⚡</p>
+    <ul>
+        <li><span class="emoji">💎</span>Эксклюзивные предметы и бонусы</li>
+        <li><span class="emoji">🚀</span>Ускоренный прогресс и премиум-доступ</li>
+        <li><span class="emoji">🛡️</span>Особые привилегии в проекте</li>
+    </ul>
+
+    <button class="buy-btn" onclick="openModal('donat')">💰 Купить Donat</button>
+    <button class="buy-btn" onclick="openModal('iv')">💳 Купить IV</button>
+</div>
+
+<div id="buyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle">Выберите пакет</h2>
+    <div id="packageButtons"></div>
+    <div class="bottom-text">Если хотите приобрести больше звёзд — удвойте оплату и донат удвоится</div>
+  </div>
+</div>
+
+<script>
+const packages = {
+    donat: [{name:'5000', stars:15}],
+    iv: [{name:'50 миллионов', stars:15}]
+};
+
+function openModal(type) {
+  document.getElementById('buyModal').style.display = 'block';
+  const modalTitle = document.getElementById('modalTitle');
+  modalTitle.innerText = type === 'donat' ? 'Выберите пакет Donat' : 'Выберите пакет IV';
+  const container = document.getElementById('packageButtons');
+  container.innerHTML = '';
+  packages[type].forEach(pkg => {
+    const btn = document.createElement('button');
+    btn.className = 'package-btn';
+    btn.innerText = `${pkg.name} — ${pkg.stars}⭐`;
+    btn.onclick = () => { goToTelegram(type, pkg.name, pkg.stars); };
+    container.appendChild(btn);
+  });
+}
+
+function closeModal() { document.getElementById('buyModal').style.display = 'none'; }
+
+function goToTelegram(type, name, stars){
+  const tgLink = `https://t.me/Ajan_Dev?start=${type}_${name}_${stars}`;
+  window.open(tgLink,'_blank');
+  closeModal();
+}
+</script>
+
+</body>
+</html>
